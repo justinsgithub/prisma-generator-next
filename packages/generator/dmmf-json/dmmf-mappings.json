@@ -1,0 +1,88 @@
+{
+  "modelOperations": [
+    {
+      "model": "User",
+      "aggregate": "aggregateUser",
+      "createOne": "createOneUser",
+      "deleteMany": "deleteManyUser",
+      "deleteOne": "deleteOneUser",
+      "findFirst": "findFirstUser",
+      "findFirstOrThrow": "findFirstUserOrThrow",
+      "findMany": "findManyUser",
+      "findUnique": "findUniqueUser",
+      "findUniqueOrThrow": "findUniqueUserOrThrow",
+      "groupBy": "groupByUser",
+      "updateMany": "updateManyUser",
+      "updateOne": "updateOneUser",
+      "upsertOne": "upsertOneUser"
+    },
+    {
+      "model": "Post",
+      "aggregate": "aggregatePost",
+      "createOne": "createOnePost",
+      "deleteMany": "deleteManyPost",
+      "deleteOne": "deleteOnePost",
+      "findFirst": "findFirstPost",
+      "findFirstOrThrow": "findFirstPostOrThrow",
+      "findMany": "findManyPost",
+      "findUnique": "findUniquePost",
+      "findUniqueOrThrow": "findUniquePostOrThrow",
+      "groupBy": "groupByPost",
+      "updateMany": "updateManyPost",
+      "updateOne": "updateOnePost",
+      "upsertOne": "upsertOnePost"
+    },
+    {
+      "model": "HiddenBook",
+      "aggregate": "aggregateHiddenBook",
+      "createOne": "createOneHiddenBook",
+      "deleteMany": "deleteManyHiddenBook",
+      "deleteOne": "deleteOneHiddenBook",
+      "findFirst": "findFirstHiddenBook",
+      "findFirstOrThrow": "findFirstHiddenBookOrThrow",
+      "findMany": "findManyHiddenBook",
+      "findUnique": "findUniqueHiddenBook",
+      "findUniqueOrThrow": "findUniqueHiddenBookOrThrow",
+      "groupBy": "groupByHiddenBook",
+      "updateMany": "updateManyHiddenBook",
+      "updateOne": "updateOneHiddenBook",
+      "upsertOne": "upsertOneHiddenBook"
+    },
+    {
+      "model": "Book",
+      "aggregate": "aggregateBook",
+      "createOne": "createOneBook",
+      "deleteMany": "deleteManyBook",
+      "deleteOne": "deleteOneBook",
+      "findFirst": "findFirstBook",
+      "findFirstOrThrow": "findFirstBookOrThrow",
+      "findMany": "findManyBook",
+      "findUnique": "findUniqueBook",
+      "findUniqueOrThrow": "findUniqueBookOrThrow",
+      "groupBy": "groupByBook",
+      "updateMany": "updateManyBook",
+      "updateOne": "updateOneBook",
+      "upsertOne": "upsertOneBook"
+    },
+    {
+      "model": "Map",
+      "aggregate": "aggregateMap",
+      "createOne": "createOneMap",
+      "deleteMany": "deleteManyMap",
+      "deleteOne": "deleteOneMap",
+      "findFirst": "findFirstMap",
+      "findFirstOrThrow": "findFirstMapOrThrow",
+      "findMany": "findManyMap",
+      "findUnique": "findUniqueMap",
+      "findUniqueOrThrow": "findUniqueMapOrThrow",
+      "groupBy": "groupByMap",
+      "updateMany": "updateManyMap",
+      "updateOne": "updateOneMap",
+      "upsertOne": "upsertOneMap"
+    }
+  ],
+  "otherOperations": {
+    "read": [],
+    "write": ["executeRaw", "queryRaw"]
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"nextjs_api","provider":{"fromEnvVar":null,"value":"node ../../node_modules/prisma-generator-nextjs"},"output":{"value":"/home/justin/Github/prisma-projects/prisma-generator-nextjs/packages/usage/types","fromEnvVar":null},"config":{},"binaryTargets":[],"previewFeatures":[],"isCustomOutput":true}

@@ -1,0 +1,1 @@
+[{"name":"db","provider":"sqlite","activeProvider":"sqlite","url":{"fromEnvVar":null,"value":"file:./dev.db"},"schemas":[]}]

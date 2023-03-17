@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14.0",
+    "pnpm": ">=3",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "16.2.3",
+    "@commitlint/config-conventional": "16.0.0",
+    "husky": "7.0.4"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}

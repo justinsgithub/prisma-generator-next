@@ -1,0 +1,1 @@
+[{"name":"client","provider":{"fromEnvVar":null,"value":"prisma-client-js"},"output":{"value":"/home/justin/Github/prisma-projects/prisma-generator-nextjs/packages/usage/node_modules/@prisma/client","fromEnvVar":null},"config":{},"binaryTargets":[],"previewFeatures":[]}]
