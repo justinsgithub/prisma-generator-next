@@ -9,10 +9,8 @@
   },
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
-    "@commitlint/config-conventional": "16.0.0",
-    "husky": "7.0.4"
+    "@commitlint/config-conventional": "16.0.0"
   },
   "scripts": {
-    "prepare": "husky install"
   }
 }
