@@ -63,6 +63,7 @@
     "zod": "^3.21.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ]
 }
