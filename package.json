@@ -16,6 +16,10 @@
   },
   "scripts": {
     "prepare": "is-ci || husky install",
-    "pub": "changeset publish"
+    "pub": "changeset publish",
+    "pr": "gh pr list",
+    "view": "gh pr view",
+    "approve": "gh pr review --approve",
+    "merge": "gh pr merge"
   }
 }
