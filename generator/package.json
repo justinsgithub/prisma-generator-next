@@ -1,6 +1,6 @@
 {
   "name": "prisma-generator-next",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "scaffold Next.JS api routes with middleware and Zod validations using Prisma",
   "homepage": "https://github.com/justinsgithub/prisma-generator-next#README.md",
   "license": "MIT",
