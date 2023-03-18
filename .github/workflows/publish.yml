@@ -1,15 +1,5 @@
 name: Publish
-on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
-  push:
-    branches:
-      - "main"
-
 concurrency: ${{ github.workflow }}-${{ github.ref }}
-
 jobs:
   publish:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -24,12 +14,27 @@ jobs:
           node-version: 16.x
           cache: "pnpm"
 
-      - run: pnpm install
-      - name: Create Release Pull Request or Publish
+      - name: Install Dependencies 
+        run: pnpm install
+
+      - name: Build
+        working-directory: ./generator
+        run: pnpm build
+
+      - name: Publish
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm run release
+          publish: pnpm run pub
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+  push:
+    branches:
+      - "main"

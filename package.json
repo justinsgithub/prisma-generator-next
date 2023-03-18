@@ -15,7 +15,6 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "build",
     "pub": "changeset publish"
   }
 }
