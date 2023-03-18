@@ -1,31 +1,27 @@
-import { DMMF } from '@prisma/generator-helper';
-import { checkModelHasModelRelation } from './model-helpers';
+import { DMMF } from '@prisma/generator-helper'
+import { checkModelHasModelRelation } from './model-helpers'
 
 export function addMissingInputObjectTypesForModelArgs(
   inputObjectTypes: DMMF.InputType[],
   models: DMMF.Model[],
   isGenerateSelect: boolean,
-  isGenerateInclude: boolean,
+  isGenerateInclude: boolean
 ) {
-  const modelArgsInputObjectTypes = generateModelArgsInputObjectTypes(
-    models,
-    isGenerateSelect,
-    isGenerateInclude,
-  );
+  const modelArgsInputObjectTypes = generateModelArgsInputObjectTypes(models, isGenerateSelect, isGenerateInclude)
 
   for (const modelArgsInputObjectType of modelArgsInputObjectTypes) {
-    inputObjectTypes.push(modelArgsInputObjectType);
+    inputObjectTypes.push(modelArgsInputObjectType)
   }
 }
 function generateModelArgsInputObjectTypes(
   models: DMMF.Model[],
   isGenerateSelect: boolean,
-  isGenerateInclude: boolean,
+  isGenerateInclude: boolean
 ) {
-  const modelArgsInputObjectTypes: DMMF.InputType[] = [];
+  const modelArgsInputObjectTypes: DMMF.InputType[] = []
   for (const model of models) {
-    const { name: modelName } = model;
-    const fields: DMMF.SchemaArg[] = [];
+    const { name: modelName } = model
+    const fields: DMMF.SchemaArg[] = []
 
     if (isGenerateSelect) {
       const selectField: DMMF.SchemaArg = {
@@ -40,11 +36,11 @@ function generateModelArgsInputObjectTypes(
             namespace: 'prisma',
           },
         ],
-      };
-      fields.push(selectField);
+      }
+      fields.push(selectField)
     }
 
-    const hasRelationToAnotherModel = checkModelHasModelRelation(model);
+    const hasRelationToAnotherModel = checkModelHasModelRelation(model)
 
     if (isGenerateInclude && hasRelationToAnotherModel) {
       const includeField: DMMF.SchemaArg = {
@@ -59,8 +55,8 @@ function generateModelArgsInputObjectTypes(
             namespace: 'prisma',
           },
         ],
-      };
-      fields.push(includeField);
+      }
+      fields.push(includeField)
     }
 
     const modelArgsInputObjectType: DMMF.InputType = {
@@ -70,8 +66,8 @@ function generateModelArgsInputObjectTypes(
         minNumFields: null,
       },
       fields,
-    };
-    modelArgsInputObjectTypes.push(modelArgsInputObjectType);
+    }
+    modelArgsInputObjectTypes.push(modelArgsInputObjectType)
   }
-  return modelArgsInputObjectTypes;
+  return modelArgsInputObjectTypes
 }

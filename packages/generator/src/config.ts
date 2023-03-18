@@ -54,12 +54,12 @@ function checkUserPrisma({ customPrismaFilePath, prismaVarName, schemaPath, outp
   return p
 }
 
-type GetConfig = { 
+type GetConfig = {
   outputDir: string
   prismaVarName: string
   apiPath: string
-  prismaFilePath: string 
-  isDefaultExport: boolean 
+  prismaFilePath: string
+  isDefaultExport: boolean
 }
 
 export function getConfig(options: GeneratorOptions): GetConfig {
@@ -72,7 +72,12 @@ export function getConfig(options: GeneratorOptions): GetConfig {
   const customPrismaFilePath = configTest.data.prismaFilePath
   /* log.info('CUSTOM PRISMA FP', customPrismaFilePath) */
 
-  const {userPrismaPath, isDefaultExport} = checkUserPrisma({customPrismaFilePath, prismaVarName, schemaPath, outputDir})
+  const { userPrismaPath, isDefaultExport } = checkUserPrisma({
+    customPrismaFilePath,
+    prismaVarName,
+    schemaPath,
+    outputDir,
+  })
   const prismaFilePath = userPrismaPath ? userPrismaPath : path.resolve(path.join(outputDir, 'db.ts'))
 
   let apiPath = ''

@@ -12,7 +12,7 @@ interface Params {
   prismaVarName: string
 }
 
-export function indexTemplate (params: Params): string | null {
+export function indexTemplate(params: Params): string | null {
   const { isDefaultExport, indexFilePath, prismaFilePath, prismaVarName } = params
   if (!indexFilePath || !prismaFilePath) return null
   const prismaImportPath = getImportPath(indexFilePath, prismaFilePath)

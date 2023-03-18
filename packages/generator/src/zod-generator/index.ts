@@ -56,7 +56,7 @@ async function generateObjectSchemas(inputObjectTypes: DMMF.InputType[]) {
 async function generateModelSchemas(
   models: DMMF.Model[],
   modelOperations: DMMF.ModelMapping[],
-  aggregateOperationSupport: AggregateOperationSupport,
+  aggregateOperationSupport: AggregateOperationSupport
 ) {
   const transformer = new Transformer({
     models,
@@ -102,7 +102,14 @@ export async function generateZod(options: GeneratorOptions) {
     const generatorConfigOptions = options.generator.config
 
     const addMissingInputObjectTypeOptions = resolveAddMissingInputObjectTypeOptions(generatorConfigOptions)
-    addMissingInputObjectTypes(inputObjectTypes, outputObjectTypes, models, modelOperations, dataSource.provider, addMissingInputObjectTypeOptions)
+    addMissingInputObjectTypes(
+      inputObjectTypes,
+      outputObjectTypes,
+      models,
+      modelOperations,
+      dataSource.provider,
+      addMissingInputObjectTypeOptions
+    )
 
     const aggregateOperationSupport = resolveAggregateOperationSupport(inputObjectTypes)
 

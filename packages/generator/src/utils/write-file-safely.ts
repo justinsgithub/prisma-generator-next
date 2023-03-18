@@ -36,18 +36,18 @@ function normalizePath(path: string) {
   }
   if (path === '\\' || path === '/') return '/'
 
-  let len = path.length
+  const len = path.length
   if (len <= 1) return path
   let prefix = ''
   if (len > 4 && path[3] === '\\') {
-    let ch = path[2]
+    const ch = path[2]
     if ((ch === '?' || ch === '.') && path.slice(0, 2) === '\\\\') {
       path = path.slice(2)
       prefix = '//'
     }
   }
 
-  let segs = path.split(/[/\\]+/)
+  const segs = path.split(/[/\\]+/)
   return prefix + segs.join('/')
 }
 

@@ -11,7 +11,12 @@ const nullIfExists = (path: string): string | null => (existsSync(path) ? null :
   first generate: index, db, middleware, api-routes
   every generate: types, validate, schemas/
 */
-export function getPgenFiles(apiPath: string, modelNames: string[], prismaFilePath: string, outputDir: string): PgenFiles {
+export function getPgenFiles(
+  apiPath: string,
+  modelNames: string[],
+  prismaFilePath: string,
+  outputDir: string
+): PgenFiles {
   const types = path.join(outputDir, 'types.ts')
   const validate = path.join(outputDir, 'validate.ts')
   const schemas = path.join(outputDir, 'schemas')
@@ -46,7 +51,7 @@ export type Content = {
   middleware: string | null
   types: string
   validate: string
-  apiRoutes: { modelName: string; apiRoute: string | null, content: string }[]
+  apiRoutes: { modelName: string; apiRoute: string | null; content: string }[]
 }
 
 export async function writePgenFiles(files: PgenFiles, content: Content) {

@@ -24,7 +24,6 @@ export const formatFile = (content: string): Promise<string> => {
       } catch (error) {
         rej(error)
       }
-    }),
+    })
   )
 }
-

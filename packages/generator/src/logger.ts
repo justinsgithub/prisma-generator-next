@@ -6,21 +6,26 @@ export const tags = {
   info: chalk.cyan('prisma:info'),
   query: chalk.blue('prisma:query'),
 }
+
 function print(...data: any[]) {
   console.log(...data)
 }
+
 function warn(message: any, ...optionalParams: any[]) {
-    // prisma generate not outputting to console, redirecting somewhere else ???
-    /* console.warn(`${tags.warn} ${message}`, ...optionalParams) */
-    console.info(`${tags.warn} ${message}\n`, ...optionalParams)
+  // prisma generate not outputting to console, redirecting somewhere else ???
+  /* console.warn(`${tags.warn} ${message}`, ...optionalParams) */
+  console.info(`${tags.warn} ${message}\n`, ...optionalParams)
 }
+
 function info(message: any, ...optionalParams: any[]) {
   console.info(`${tags.info} ${message}\n`, ...optionalParams)
 }
+
 function error(message: any, ...optionalParams: any[]) {
   // same as warn ^^
   console.info(`${tags.error} ${message}\n`, ...optionalParams)
 }
+
 function query(message: any, ...optionalParams: any[]) {
   console.log(`${tags.query} ${message}\n`, ...optionalParams)
 }

@@ -1,4 +1,4 @@
-import type { DMMF } from "@prisma/generator-helper"
+import type { DMMF } from '@prisma/generator-helper'
 
 // Thanks to prisma-zod-generator
 export function resolveModelsComments(models: DMMF.Model[]): string[] {

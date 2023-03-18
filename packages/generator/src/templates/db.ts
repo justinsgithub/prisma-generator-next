@@ -1,5 +1,4 @@
-export const dbTemplate =
-`/* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
+export const dbTemplate = `/* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
 /* this file is only written if user file with prisma export is not found */
 
 import { PrismaClient } from '@prisma/client'

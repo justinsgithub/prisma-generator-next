@@ -1,4 +1,4 @@
-export function middlewareTemplate (provider: string) {
+export function middlewareTemplate(provider: string) {
   // certain providers may lack or have extra operations
   const sqlite = provider === 'sqlite'
   const postOp = `export type PostOp = Extract<'create'${sqlite ? '' : " | 'createMany'"} | 'upsert', ModelOp>`
@@ -9,7 +9,7 @@ export function middlewareTemplate (provider: string) {
   const noMong = `all: ['findFirst' , 'findFirstOrThrow' , 'findMany' , 'findUnique' , 'findUniqueOrThrow' , 'aggregate', 'groupBy' ],`
   const getAll = mong ? yesMong : noMong
 
-  return (`
+  return `
 /* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
 import { Prisma } from '@prisma/client'
 import { NextApiHandler } from 'next'
@@ -250,5 +250,5 @@ export const withQueryArgs = withMiddleware('catchUnknownErr', 'useGet', 'checkQ
 
  export default withAllMethods((_req, res) => return res.send('api response using withAllMethods middleware'))
 */
-`)
+`
 }

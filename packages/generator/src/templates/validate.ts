@@ -1,7 +1,7 @@
-import { join, resolve } from "path"
-import { getImportPath } from "../utils/get-import-path"
+import { join, resolve } from 'path'
+import { getImportPath } from '../utils/get-import-path'
 
-function createValObj (modelName: string, provider: string) {
+function createValObj(modelName: string, provider: string) {
   const sqlite = provider === 'sqlite'
   const createMany = sqlite ? '' : `"createMany": schemas.${modelName}CreateManySchema,`
 
@@ -9,7 +9,7 @@ function createValObj (modelName: string, provider: string) {
   const aggregateRaw = mong ? `"aggregateRaw": schemas.${modelName}AggregateRawObjectSchema,` : ''
   const findRaw = mong ? `"findRaw": schemas.${modelName}FindRawObjectSchema,` : ''
 
-  return (`
+  return `
   "${modelName}": {
     "aggregate": schemas.${modelName}AggregateSchema,
     ${aggregateRaw}
@@ -26,15 +26,15 @@ function createValObj (modelName: string, provider: string) {
     "delete": schemas.${modelName}DeleteOneSchema,
     "deleteMany": schemas.${modelName}DeleteManySchema,
   }
-`)
+`
 }
 
 export function validateTemplate(modelNames: string[], provider: string, outputDir: string): string {
-  const opVals = modelNames.map(name => createValObj(name, provider))
+  const opVals = modelNames.map((name) => createValObj(name, provider))
   const joinOpVals = opVals.join(',')
   const schemaImport = getImportPath(resolve(join(outputDir, 'validate.ts')), resolve(join(outputDir, 'schemas')))
 
-  return(`
+  return `
 /* IMPORTANT: this file ***IS NOT SAFE*** to edit, will be overwritten every time "prisma generate" is ran */
 /* all files in ./prisma-zod directory will also be deleted / overwritten */
 import * as schemas from '${schemaImport}';
@@ -43,5 +43,5 @@ import { ModelValidations } from './types';
 export const validations: ModelValidations = {
   ${joinOpVals}
 }
-`)
+`
 }

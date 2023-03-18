@@ -1,5 +1,5 @@
-import { join, resolve } from "path"
-import { getImportPath } from "../utils/get-import-path"
+import { join, resolve } from 'path'
+import { getImportPath } from '../utils/get-import-path'
 import { lowerPlural } from '../utils/write-file-safely'
 
 interface ApiTemplate {
@@ -18,17 +18,22 @@ export function apiTemplate(params: ApiTemplate): string {
   const importPath = getImportPath(fullPath, resolve(indexFilePath))
   const pgenImport1 = `import ${prismaVarName}, { useMiddleware } from '${importPath}'`
   const pgenImport2 = `import { ${prismaVarName}, useMiddleware } from '${importPath}'`
-  const pgenImport  = isDefaultExport ? pgenImport1 : pgenImport2
+  const pgenImport = isDefaultExport ? pgenImport1 : pgenImport2
 
   const sqlite = provider === 'sqlite'
-  const createMany = sqlite ? '' : `if (operation === 'createMany') return res.status(201).send(await prisma.post.createMany(args))`
+  const createMany = sqlite
+    ? ''
+    : `if (operation === 'createMany') return res.status(201).send(await prisma.post.createMany(args))`
 
   const mong = provider === 'mongodb'
-  const aggRaw = mong ? `if (operation === 'aggregateRaw') return res.status(200).send(await prisma.post.aggregateRaw(args))` : ''
-  const findRaw = mong ? `if (operation === 'findRaw') return res.status(200).send(await prisma.post.findRaw(args))` : ''
+  const aggRaw = mong
+    ? `if (operation === 'aggregateRaw') return res.status(200).send(await prisma.post.aggregateRaw(args))`
+    : ''
+  const findRaw = mong
+    ? `if (operation === 'findRaw') return res.status(200).send(await prisma.post.findRaw(args))`
+    : ''
 
-  return (
-`/* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
+  return `/* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
 import type { NextApiHandler } from 'next'
 ${pgenImport}
 
@@ -71,5 +76,5 @@ const handler: NextApiHandler = async (req, res) => {
 }
 
 export default useMiddleware({model: '${modelName}', handler})
-`)
+`
 }

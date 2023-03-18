@@ -3,8 +3,7 @@ import { writeFile } from 'fs/promises'
 import { GeneratorOptions } from '@prisma/generator-helper'
 
 // for generator development to inspect generator helper output
-export async function generateJson (options: GeneratorOptions) {
-
+export async function generateJson(options: GeneratorOptions) {
   await writeFile('prisma/dmmf.json', JSON.stringify(options.dmmf))
 
   await writeFile('prisma/datamodel.json', JSON.stringify(options.datamodel))
@@ -27,4 +26,3 @@ export async function generateJson (options: GeneratorOptions) {
 
   await writeFile('prisma/dmmf-datamodel-models.json', JSON.stringify(options.dmmf.datamodel.models))
 }
-
