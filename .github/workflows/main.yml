@@ -1,4 +1,4 @@
-name: CI 🧪
+name: CI
 jobs:
   build:
     runs-on: ubuntu-latest
