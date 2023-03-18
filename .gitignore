@@ -7,3 +7,5 @@ pnpm-debug.log
 
 # sqlite files
 **/*.db
+**/generated
+**/pgen

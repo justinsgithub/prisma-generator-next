@@ -1,9 +1,6 @@
 {
-  "name": "usage",
+  "name": "dev",
   "private": true,
-  "engines": {
-    "node": ">=16.8"
-  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",

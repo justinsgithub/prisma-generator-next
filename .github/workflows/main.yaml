@@ -27,10 +27,10 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install
-
-      - name: Build
-        working-directory: ./generator
-        run: pnpm build
+      
+      # - name: Build is automatically done by changesets / husky during git push
+      #   working-directory: ./generator
+      #   run: pnpm build 
 
       - name: Publish
         id: changesets

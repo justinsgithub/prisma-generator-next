@@ -7,10 +7,9 @@ import { getPgenFiles, writePgenFiles } from '../utils/write-files'
 import { generateZod } from '../zod-generator'
 
 const onManifest = (_config: GeneratorConfig) => {
-  log.info(`GENERATING`)
   return {
     defaultOutput: '../src/pgen',
-    prettyName: 'Prisma NextJS API',
+    prettyName: 'Prisma Next.JS',
     requiresGenerators: ['prisma-client-js'], // for zod generator
   }
 }
@@ -18,8 +17,6 @@ const onManifest = (_config: GeneratorConfig) => {
 const onGenerate = async (options: GeneratorOptions) => {
   try {
     const { apiPath, isDefaultExport, prismaFilePath, prismaVarName, outputDir } = getConfig(options)
-
-    log.info(` outputDir: ${outputDir} `)
 
     await generateZod(options)
 
@@ -67,7 +64,7 @@ const onGenerate = async (options: GeneratorOptions) => {
 
     await writePgenFiles(files, content)
   } catch (error) {
-    console.log('ERROR', error)
+    log.error('ERROR', error)
   }
 }
 

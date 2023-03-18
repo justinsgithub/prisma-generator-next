@@ -63,14 +63,12 @@ type GetConfig = {
 }
 
 export function getConfig(options: GeneratorOptions): GetConfig {
-  console.log('GETTING CONFIG')
   const outputDir = parseEnvValue(options.generator.output as EnvValue)
   const schemaPath = options.schemaPath
   const configTest = configSchema.safeParse(options.generator.config)
   if (!configTest.success) throw new Error('Invalid generator options passed')
   const { prismaVarName } = configTest.data
   const customPrismaFilePath = configTest.data.prismaFilePath
-  /* log.info('CUSTOM PRISMA FP', customPrismaFilePath) */
 
   const { userPrismaPath, isDefaultExport } = checkUserPrisma({
     customPrismaFilePath,

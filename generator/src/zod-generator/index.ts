@@ -12,6 +12,7 @@ import Transformer from './transformer'
 import { AggregateOperationSupport } from './types'
 import { removeDir } from '../utils/remove-dir'
 import path from 'path'
+import { log } from '../logger'
 
 async function handleGeneratorOutputValue(generatorOutputValue: EnvValue) {
   const outputDirectoryPath = parseEnvValue(generatorOutputValue)
@@ -119,6 +120,6 @@ export async function generateZod(options: GeneratorOptions) {
     await generateModelSchemas(models, modelOperations, aggregateOperationSupport)
     await generateIndex()
   } catch (error) {
-    console.log(error)
+    log.error(error)
   }
 }

@@ -17,12 +17,3 @@ export function getImportPath(importing: string, exporting: string) {
   const importPath = relativePath.replace(/.tsx$|.ts$/, '')
   return importPath
 }
-
-/* console.log(getImportPath('.project.md', 'package.json')) */
-/* console.log(getImportPath('project.md', '.package.json')) */
-/* console.log(getImportPath('.project.md', path.join('src', 'helpers', 'create-routes.ts'))) */
-/* console.log(getImportPath(path.join('src', 'helpers', 'create-routes.ts'), '.project.md')) */
-/* console.log(getImportPath('project.md', path.join('src', 'helpers', 'create-routes.ts'))) */
-/* console.log(getImportPath(path.join('src', 'helpers', 'create-routes.ts'), 'project.md')) */
-/* console.log(getImportPath('.', path.join('src', 'helpers', 'create-routes.ts'))) */
-/* console.log(getImportPath(path.join('src', 'helpers', 'create-routes.ts'), '.')) */
