@@ -30,7 +30,6 @@
     "nextjs"
   ],
   "scripts": {
-    "prepare": "cd .. && husky install ./generator/.husky",
     "build": "tsup src/generator.ts --format cjs,esm --dts",
     "dev": "tsup src/generator.ts --format cjs,esm --dts --watch",
     "test": "jest",
@@ -57,7 +56,6 @@
     "@typescript-eslint/parser": "5.55.0",
     "eslint": "8.26.0",
     "eslint-config-prettier": "^8.7.0",
-    "husky": "^8.0.3",
     "jest": "27.4.7",
     "prisma": "4.8.0",
     "ts-jest": "27.1.4",
