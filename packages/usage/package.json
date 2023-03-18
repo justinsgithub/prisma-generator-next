@@ -5,7 +5,6 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "echo 'install finished'",
     "db_pull": "prisma db pull",
     "studio": "prisma studio",
     "gen": "prisma generate",
