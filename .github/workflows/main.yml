@@ -1,28 +1,44 @@
-name: CI
+name: Publish
+
+on:
+  # workflow_run: only I (repo owner) push to main and will run checks locally before push
+  #   workflows: ["CI"]
+  #   types:
+  #     - completed
+  push:
+    branches:
+      - main
+
+# concurrency: ${{ github.workflow }}-${{ github.ref }} no other workflows at the moment
+
 jobs:
-  build:
+  publish:
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }} no other workflows at the moment
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - name: Initialize
+        uses: actions/checkout@v3
+        uses: pnpm/action-setup@v2
         with:
           version: 7
-
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
-          cache: "pnpm"
           node-version: 16.x
-
-      - name: Install Dependencies 
+          cache: pnpm
         run: pnpm install
 
       - name: Build
         working-directory: ./generator
         run: pnpm build
-on:
-  pull_request:
-    branches:
-      - "*"
-  push:
-    branches:
-      - main
+
+      - name: Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm run pub
+          commit: "changeset: version package(s)"
+          title: "changeset: version package(s)"
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
