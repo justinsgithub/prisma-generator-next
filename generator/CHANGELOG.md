@@ -1,5 +1,11 @@
 # prisma-generator-next
 
+## 0.0.4
+
+### Patch Changes
+
+- a921e28: Fix engines field in package.json
+
 ## 0.0.3
 
 ### Patch Changes
