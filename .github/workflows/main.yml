@@ -14,7 +14,7 @@ jobs:
           node-version: 16.x
 
       - name: Install Dependencies 
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build
         working-directory: ./generator
