@@ -26,6 +26,8 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm run pub
+          commit: "changeset: version package(s)"
+          title: "changeset: version package(s)"
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
