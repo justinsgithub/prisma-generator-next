@@ -1,5 +1,11 @@
 # prisma-generator-next
 
+## 0.1.0
+
+### Minor Changes
+
+- 33dbb2c: New customization options for prisma.schema
+
 ## 0.0.5
 
 ### Patch Changes
