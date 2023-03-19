@@ -4,7 +4,11 @@ generator client {
 
 generator next {
   provider = "prisma-generator-next"
-  output   = "./generated"
+  output   = "../src"
+  outputSuffix = "pgen"
+  apiRoutePrefix = "pgen"
+  prismaVarName = "prisma"
+  useBigInt = "false"
 }
 
 datasource db {

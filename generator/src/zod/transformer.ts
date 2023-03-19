@@ -51,9 +51,9 @@ export default class Transformer {
     return this.outputPath
   }
 
-  static setPrismaClientOutputPath(prismaClientCustomPath: string) {
-    this.prismaClientOutputPath = prismaClientCustomPath
-    this.isCustomPrismaClientOutputPath = prismaClientCustomPath !== '@prisma/client'
+  static setPrismaClientOutputPath(prismaClientOutputPath: string) {
+    this.prismaClientOutputPath = prismaClientOutputPath
+    this.isCustomPrismaClientOutputPath = prismaClientOutputPath !== '@prisma/client'
   }
 
   static async generateIndex() {
@@ -84,8 +84,8 @@ export default class Transformer {
     return `export const ${name}Schema = ${schema}`
   }
 
-  async generateObjectSchema() {
-    const zodObjectSchemaFields = this.generateObjectSchemaFields()
+  async generateObjectSchema(useBigInt: boolean) {
+    const zodObjectSchemaFields = this.generateObjectSchemaFields(useBigInt)
     const objectSchema = this.prepareObjectSchema(zodObjectSchemaFields)
     const objectSchemaName = this.resolveObjectSchemaName()
 
@@ -96,9 +96,9 @@ export default class Transformer {
     )
   }
 
-  generateObjectSchemaFields() {
+  generateObjectSchemaFields(useBigInt: boolean) {
     const zodObjectSchemaFields = this.fields
-      .map((field) => this.generateObjectSchemaField(field))
+      .map((field) => this.generateObjectSchemaField(field, useBigInt))
       .flatMap((item) => item)
       .map((item) => {
         const [zodStringWithMainType, field, skipValidators] = item
@@ -112,7 +112,7 @@ export default class Transformer {
     return zodObjectSchemaFields
   }
 
-  generateObjectSchemaField(field: PrismaDMMF.SchemaArg): [string, PrismaDMMF.SchemaArg, boolean][] {
+  generateObjectSchemaField(field: PrismaDMMF.SchemaArg, useBigInt: boolean): [string, PrismaDMMF.SchemaArg, boolean][] {
     const lines = field.inputTypes
 
     if (lines.length === 0) {
@@ -125,8 +125,8 @@ export default class Transformer {
       } else if (inputType.type === 'Int' || inputType.type === 'Float' || inputType.type === 'Decimal') {
         result.push(this.wrapWithZodValidators('z.number()', field, inputType))
       } else if (inputType.type === 'BigInt') {
-        // TODO: find a better solution?
-        result.push(this.wrapWithZodValidators('z.number()', field, inputType))
+        // TODO: find a better solution? web client can't send bigint?
+        result.push(this.wrapWithZodValidators(useBigInt ? 'z.bigint()' : 'z.number()', field, inputType))
       } else if (inputType.type === 'Boolean') {
         result.push(this.wrapWithZodValidators('z.boolean()', field, inputType))
       } else if (inputType.type === 'DateTime') {

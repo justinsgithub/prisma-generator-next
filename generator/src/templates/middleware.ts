@@ -1,4 +1,14 @@
-export function middlewareTemplate(provider: string) {
+import { generateImportPrismaStatement } from '../utils/get-import-path'
+
+
+type MiddlewareTemplate = {
+  provider: string
+  prismaClientOutputPath: string
+  middlewarePath: string | null
+}
+export function middlewareTemplate(params: MiddlewareTemplate) {
+  const { provider, prismaClientOutputPath, middlewarePath } = params
+  if (!middlewarePath) return ''
   // certain providers may lack or have extra operations
   const sqlite = provider === 'sqlite'
   const postOp = `export type PostOp = Extract<'create'${sqlite ? '' : " | 'createMany'"} | 'upsert', ModelOp>`
@@ -8,10 +18,11 @@ export function middlewareTemplate(provider: string) {
   const yesMong = `all: ['findFirst' , 'findFirstOrThrow' , 'findMany' , 'findUnique' , 'findUniqueOrThrow' , 'aggregate', 'groupBy', 'aggregateRaw', 'findRaw' ],`
   const noMong = `all: ['findFirst' , 'findFirstOrThrow' , 'findMany' , 'findUnique' , 'findUniqueOrThrow' , 'aggregate', 'groupBy' ],`
   const getAll = mong ? yesMong : noMong
+  const importStatement = generateImportPrismaStatement(prismaClientOutputPath, middlewarePath)
 
   return `
 /* IMPORTANT: this file ***IS SAFE*** to edit, only written first time "prisma generate" is ran */
-import { Prisma } from '@prisma/client'
+${importStatement}
 import { NextApiHandler } from 'next'
 import { Middleware, use } from 'next-api-middleware'
 import type { ModelOp, ModelName, ValidateOp } from './types'

@@ -37,7 +37,7 @@ Using npm:
 
 # Usage
 
-1- Add the generator to your Prisma schema
+1. Add the generator to your Prisma schema
 
 ```prisma
 generator zod {
@@ -45,7 +45,7 @@ generator zod {
 }
 ```
 
-2- Enable strict mode in `tsconfig` as it is required by Zod, and considered a Typescript best practice
+2. Enable strict mode in `tsconfig` as it is required by Zod, and considered a Typescript best practice
 
 ```ts
 {
@@ -56,9 +56,9 @@ generator zod {
 
 ```
 
-3- Run `npx prisma generate` 
+3. Run `npx prisma generate` 
 
-If your prisma.schema looked like this
+If your prisma.schema looked like this...
 
 ```prisma
 model User {
@@ -82,9 +82,11 @@ model Post {
 }
 ```
 
-it will generate the following files
+...it will generate the following files
 
-5- edit the generated files as needed
+
+
+4. edit the generated files as needed
 
 WARNING: certain files should be thought of as "read-only", as they will be regenerated every time `prisma generate` is ran. Any changes to the "read-only" files would be lost, files clarify if they are okay to modify at the top. 
 
@@ -114,7 +116,7 @@ model User {
 }
 ```
 
-# Additional Options
+## Additional Options
 
 The output option is relative to the prisma.schema file, so the default `./generated` would output to `prisma/generated` (unless you have your schema file in a custom location)
 

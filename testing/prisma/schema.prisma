@@ -1,10 +1,14 @@
 generator client {
   provider = "prisma-client-js"
+  output = "../src/BLAH"
 }
 
 generator next {
   provider = "prisma-generator-next"
-  output   = "./generated"
+  prismaVarName = "prisma"
+  apiRoutePrefix = "pgen"
+  outputSuffix = "pgen"
+  useBigInt = "false"
 }
 
 datasource db {

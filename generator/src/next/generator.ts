@@ -1,14 +1,14 @@
 import { GeneratorConfig, generatorHandler, GeneratorOptions } from '@prisma/generator-helper'
 import { getConfig } from '../config'
 import { log } from '../logger'
-import { apiTemplate, indexTemplate, middlewareTemplate, typesTemplate, validateTemplate } from '../templates'
+import { apiTemplate, dbTemplate, indexTemplate, middlewareTemplate, typesTemplate, validateTemplate } from '../templates'
 import { resolveModelsComments } from '../utils/resolve-comments'
 import { getPgenFiles, writePgenFiles } from '../utils/write-files'
-import { generateZod } from '../zod-generator'
+import { generateZod } from '../zod'
 
 const onManifest = (_config: GeneratorConfig) => {
   return {
-    defaultOutput: '../src/pgen',
+    defaultOutput: '../src',
     prettyName: 'Prisma Next.JS',
     requiresGenerators: ['prisma-client-js'], // for zod generator
   }
@@ -16,7 +16,7 @@ const onManifest = (_config: GeneratorConfig) => {
 
 const onGenerate = async (options: GeneratorOptions) => {
   try {
-    const { apiPath, isDefaultExport, prismaFilePath, prismaVarName, outputDir } = getConfig(options)
+    const { apiPath, isDefaultExport, prismaClientOutputPath, prismaFilePath, prismaVarName, outputDir } = getConfig(options)
 
     await generateZod(options)
 
@@ -29,7 +29,7 @@ const onGenerate = async (options: GeneratorOptions) => {
 
     const files = getPgenFiles(apiPath, modelNames, prismaFilePath, outputDir)
 
-    const { index: indexFilePath } = files
+    const { index: indexFilePath, middleware: middlewarePath, db: dbPath } = files
 
     const dataSource = options.datasources[0] // safe to assume first item in Array is the main datasource we will be using ?
 
@@ -37,9 +37,11 @@ const onGenerate = async (options: GeneratorOptions) => {
 
     const indexParams = { isDefaultExport, indexFilePath, prismaFilePath, prismaVarName }
 
+    const db = dbTemplate(prismaClientOutputPath, dbPath)
+
     const index = indexTemplate(indexParams)
 
-    const middleware = middlewareTemplate(provider)
+    const middleware = middlewareTemplate({provider, prismaClientOutputPath, middlewarePath})
 
     const types = typesTemplate(modelMappings)
 
@@ -55,6 +57,7 @@ const onGenerate = async (options: GeneratorOptions) => {
     }))
 
     const content = {
+      db,
       index,
       middleware,
       types,

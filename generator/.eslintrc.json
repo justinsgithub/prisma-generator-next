@@ -27,7 +27,7 @@
     "max-len": [
       "warn",
       {
-        "code": 120,
+        "code": 130,
         "tabWidth": 2,
         "ignoreComments": true,
         "ignoreTemplateLiterals": true,

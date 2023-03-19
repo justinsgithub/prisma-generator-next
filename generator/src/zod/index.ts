@@ -1,5 +1,5 @@
-import { DMMF, EnvValue, GeneratorConfig, GeneratorOptions } from '@prisma/generator-helper'
-import { getDMMF, parseEnvValue } from '@prisma/internals'
+import { DMMF, GeneratorOptions } from '@prisma/generator-helper'
+import { getDMMF } from '@prisma/internals'
 import { promises as fs } from 'fs'
 import {
   addMissingInputObjectTypes,
@@ -13,26 +13,15 @@ import { AggregateOperationSupport } from './types'
 import { removeDir } from '../utils/remove-dir'
 import path from 'path'
 import { log } from '../logger'
+import { getConfig } from '../config'
 
-async function handleGeneratorOutputValue(generatorOutputValue: EnvValue) {
-  const outputDirectoryPath = parseEnvValue(generatorOutputValue)
-
+async function handleGeneratorOutputValue(outputDir: string) {
   // create the output directory and delete contents that might exist from a previous run
-  const schemaDir = path.join(outputDirectoryPath, 'schemas')
+  const schemaDir = path.join(outputDir, 'schemas')
   await fs.mkdir(schemaDir, { recursive: true })
   await removeDir(schemaDir, true)
 
-  Transformer.setOutputPath(outputDirectoryPath)
-}
-
-function getGeneratorConfigByProvider(generators: GeneratorConfig[], provider: string) {
-  return generators.find((it) => parseEnvValue(it.provider) === provider)
-}
-
-function checkForCustomPrismaClientOutputPath(prismaClientGeneratorConfig: GeneratorConfig | undefined) {
-  if (prismaClientGeneratorConfig?.isCustomOutput) {
-    Transformer.setPrismaClientOutputPath(prismaClientGeneratorConfig.output?.value as string)
-  }
+  Transformer.setOutputPath(outputDir)
 }
 
 async function generateEnumSchemas(prismaSchemaEnum: DMMF.SchemaEnum[], modelSchemaEnum: DMMF.SchemaEnum[]) {
@@ -45,12 +34,12 @@ async function generateEnumSchemas(prismaSchemaEnum: DMMF.SchemaEnum[], modelSch
   await transformer.generateEnumSchemas()
 }
 
-async function generateObjectSchemas(inputObjectTypes: DMMF.InputType[]) {
+async function generateObjectSchemas(inputObjectTypes: DMMF.InputType[], useBigInt: boolean) {
   for (let i = 0; i < inputObjectTypes.length; i += 1) {
     const fields = inputObjectTypes[i]?.fields
     const name = inputObjectTypes[i]?.name
     const transformer = new Transformer({ name, fields })
-    await transformer.generateObjectSchema()
+    await transformer.generateObjectSchema(useBigInt)
   }
 }
 
@@ -73,16 +62,16 @@ async function generateIndex() {
 
 export async function generateZod(options: GeneratorOptions) {
   try {
-    await handleGeneratorOutputValue(options.generator.output as EnvValue)
+    const { outputDir, prismaClientOutputPath, previewFeatures, useBigInt } = getConfig(options)
 
-    const prismaClientGeneratorConfig = getGeneratorConfigByProvider(options.otherGenerators, 'prisma-client-js')
+    await handleGeneratorOutputValue(outputDir)
 
     const prismaClientDmmf = await getDMMF({
       datamodel: options.datamodel,
-      previewFeatures: prismaClientGeneratorConfig?.previewFeatures,
+      previewFeatures: previewFeatures,
     })
 
-    checkForCustomPrismaClientOutputPath(prismaClientGeneratorConfig)
+    Transformer.setPrismaClientOutputPath(prismaClientOutputPath)
 
     const modelOperations = prismaClientDmmf.mappings.modelOperations
     const inputObjectTypes = prismaClientDmmf.schema.inputObjectTypes.prisma
@@ -96,7 +85,6 @@ export async function generateZod(options: GeneratorOptions) {
     await generateEnumSchemas(prismaClientDmmf.schema.enumTypes.prisma, prismaClientDmmf.schema.enumTypes.model ?? [])
 
     const dataSource = options.datasources?.[0]
-    const previewFeatures = prismaClientGeneratorConfig?.previewFeatures
     Transformer.provider = dataSource.provider
     Transformer.previewFeatures = previewFeatures
 
@@ -116,7 +104,7 @@ export async function generateZod(options: GeneratorOptions) {
 
     hideInputObjectTypesAndRelatedFields(inputObjectTypes, hiddenModels, hiddenFields)
 
-    await generateObjectSchemas(inputObjectTypes)
+    await generateObjectSchemas(inputObjectTypes, useBigInt)
     await generateModelSchemas(models, modelOperations, aggregateOperationSupport)
     await generateIndex()
   } catch (error) {

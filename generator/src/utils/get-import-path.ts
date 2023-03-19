@@ -17,3 +17,13 @@ export function getImportPath(importing: string, exporting: string) {
   const importPath = relativePath.replace(/.tsx$|.ts$/, '')
   return importPath
 }
+
+export function generateImportPrismaStatement(prismaClientOutputPath: string, filePath: string, isDB = false) {
+  let prismaClientImportPath = prismaClientOutputPath
+  const isCustom = prismaClientOutputPath !== '@prisma/client'
+  if (isCustom) {
+    prismaClientImportPath = getImportPath(filePath, prismaClientOutputPath)
+  }
+  if (isDB) return `import { PrismaClient } from '${prismaClientImportPath}'`
+  return `import { Prisma } from '${prismaClientImportPath}'`
+}
