@@ -5,10 +5,12 @@ generator client {
 generator next {
   provider = "prisma-generator-next"
   output   = "../src"
-  outputSuffix = "pgen"
-  apiRoutePrefix = "pgen"
+  outputSuffix = "pgen" // ${output}/pgen/${generatedFiles}
+  apiRoutePrefix = "pgen" // pages/api/pgen/${modelName}
   prismaVarName = "prisma"
-  useBigInt = "false"
+  useBigInt = false
+  isGenerateSelect  = true
+  isGenerateInclude = true
 }
 
 datasource db {

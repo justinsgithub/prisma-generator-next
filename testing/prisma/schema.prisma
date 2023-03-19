@@ -8,7 +8,9 @@ generator next {
   prismaVarName = "prisma"
   apiRoutePrefix = "pgen"
   outputSuffix = "pgen"
-  useBigInt = "false"
+  useBigInt = true
+  isGenerateSelect  = true
+  isGenerateInclude = true
 }
 
 datasource db {

@@ -10,7 +10,6 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Customizations](#customizations)
-- [Additional Options](#additional-options)
 
 This package assumes you have project initialized with Prisma, Next.JS 
 
@@ -118,20 +117,41 @@ model User {
 
 ## Additional Options
 
-The output option is relative to the prisma.schema file, so the default `./generated` would output to `prisma/generated` (unless you have your schema file in a custom location)
+- The output option is relative to the prisma.schema file, so the default `./generated` would output to `prisma/generated` (unless you have your schema file in a custom location)
+
+
+- The `outputSuffix` option is to try and protect against overwriting any files you already have in your project
+    - example: if `output = "../"` and `outputSuffix = ""` then if you have files named `db.ts` and `middleware.ts` in the `src` directory, they would be overwritten!! Along with any other files you have with the same name as the generated files.
 
 | Option              | Description                                                                | Type      | Default       |
 | ------------------- | -------------------------------------------------------------------------- | --------- | ------------- |
-| `output`            | Output directory for the generated zod schemas                             | `string`  | `./generated` |
-| `isGenerateSelect`  | Enables the generation of Select related schemas and the select property   | `boolean` | `true`       |
-| `isGenerateInclude` | Enables the generation of Include related schemas and the include property | `boolean` | `true`       |
+| `output`            | Output directory for the generated files                                   | `string`  | `../src`      |
+| `outputSuffix`      | Directory the files will be output to (inside the output directory)        | `string`  | `pgen`        |
+| `apiRoutePrefix`    | Namespace to avoid overwriting api-routes you already have of the same name  | `boolean` | `pgen`      |
+| `prismaVarName`     | Incase you use a different variable name to initialize PrismaClient        | `string` | `prisma`       |
+| `prismaFilePath`    | Path to the file where you export the prisma file                      | `string` | `../src/pgen/db.ts`|
+| `useBigInt` | have Zod validate BigInt types as bigint instead of number (not recommended)      | `boolean` | `false`        |
+| `isGenerateSelect`  | Enables the generation of Select related schemas and the select property   | `boolean` | `true`        |
+| `isGenerateInclude` | Enables the generation of Include related schemas and the include property | `boolean` | `true`        |
+
 
 Use additional options in the `schema.prisma`
 
+!!Important: 
+- useBigInt defaults to false because sending a BigInt value from a web client is complicated. 
+- I think it is perfectly fine for Zod to just validate that it is a number because Prisma will accept it just fine. 
+- The BigInt type is why `superjson` is used to serialize the Prisma data before sending Response to client.
+
+
 ```prisma
-generator zod {
-  provider          = "prisma-zod-generator"
-  output            = "./generated-zod-schemas"
+generator next {
+  provider = "prisma-generator-next"
+  output   = "../src"
+  outputSuffix = "pgen" // ${output}/pgen/${generatedFiles}
+  apiRoutePrefix = "pgen" // pages/api/pgen/${modelName}
+  prismaFilePath = "../src/pgen/db.ts"
+  prismaVarName = "prisma"
+  useBigInt = false
   isGenerateSelect  = true
   isGenerateInclude = true
 }
