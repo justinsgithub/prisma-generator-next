@@ -1,5 +1,11 @@
 # prisma-generator-next
 
+## 0.1.1
+
+### Patch Changes
+
+- 8ca092e: Fix configs
+
 ## 0.1.0
 
 ### Minor Changes
