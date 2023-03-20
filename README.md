@@ -10,6 +10,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Customizations](#customizations)
+- [Roadmap](#roadmap)
+- [Inspirations](#inspirations)
 
 This package assumes you have project initialized with Prisma, Next.JS 
 
@@ -137,7 +139,8 @@ model User {
 
 Use additional options in the `schema.prisma`
 
-!!Important: 
+***Important***
+
 - useBigInt defaults to false because sending a BigInt value from a web client is complicated. 
 - I think it is perfectly fine for Zod to just validate that it is a number because Prisma will accept it just fine. 
 - The BigInt type is why `superjson` is used to serialize the Prisma data before sending Response to client.
@@ -156,3 +159,20 @@ generator next {
   isGenerateInclude = true
 }
 ```
+
+# Roadmap
+
+- Turn this project into a complete Next.JS app generator, including generating a front-end client for the api routes.
+
+- Any feedback and suggestions will be greatly appreciated.
+
+# Inspirations
+
+Huge thanks to other generator projects that I was able to learn and take from.
+
+*Especially* [**prisma-zod-generator**](https://github.com/omar-dulaimi/prisma-zod-generator), the code responsible for generating the Zod schemas for this project.
+
+- [typegraphql-prisma] (https://github.com/MichalLytek/typegraphql-prisma)
+- [prisma-trpc-generator] (https://github.com/omar-dulaimi/prisma-trpc-generator)
+
+Also big shout out to [create-prisma-generator](https://github.com/YassinEldeeb/create-prisma-generator) for giving me somewhere to start from
