@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output = "../src/BLAH"
 }
 
 generator next {
@@ -22,6 +23,7 @@ model User {
   email String  @unique
   name  String?
   posts Post[]
+  books Book[]
 }
 
 model Post {
@@ -35,4 +37,23 @@ model Post {
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   likes     BigInt
+}
+
+/// @@Gen.model(hide: true)
+model HiddenBook {
+  id       Int    @unique
+  title    String
+  body     String
+}
+
+model Book {
+  id       Int    @unique
+  title    String
+  author   User?  @relation(fields: [authorId], references: [id])
+  authorId Int?
+}
+
+model Map {
+  key   String @id
+  value String
 }

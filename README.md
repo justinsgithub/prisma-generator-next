@@ -13,10 +13,12 @@
 - [Roadmap](#roadmap)
 - [Inspirations](#inspirations)
 
-This package assumes you have project initialized with Prisma, Next.JS 
+# Installation
 
-This package works best with a few dependencies to validate api-routes and keep code DRY
 
+- This package assumes you have project initialized with Prisma, Next.JS.
+
+- Works best with a few dependencies to validate api-routes and keep code DRY
 
 Using pnpm:
 
@@ -34,6 +36,16 @@ Using npm:
 
 ```bash
  npm install -D prisma-zod-generator && npm install next-api-middleware zod superjson
+```
+
+## Example Project
+
+This repository contains an example project to play with.
+
+```
+git clone https://github.com/justinsgithub/prisma-generator-next && \
+cd prisma-generator-next/usage && \
+npm install && npm run gen && npm run dev
 ```
 
 # Usage
@@ -83,8 +95,9 @@ model Post {
 }
 ```
 
-...it will generate the following files
+...it would generate the following files
 
+![Generated Files](/generated.png)
 
 
 4. edit the generated files as needed
