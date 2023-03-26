@@ -10,6 +10,9 @@ on:
       - main
 
 # concurrency: ${{ github.workflow }}-${{ github.ref }} no other workflows at the moment
+env:
+  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
   publish:
@@ -24,6 +27,9 @@ jobs:
         with:
           node-version: 16.x
           cache: pnpm
+
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: Install Dependencies
         run: pnpm install
