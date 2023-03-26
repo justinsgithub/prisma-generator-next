@@ -10,11 +10,15 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Customizations](#customizations)
+- [Roadmap](#roadmap)
+- [Inspirations](#inspirations)
 
-This package assumes you have project initialized with Prisma, Next.JS 
+# Installation
 
-This package works best with a few dependencies to validate api-routes and keep code DRY
 
+- This package assumes you have project initialized with Prisma, Next.JS.
+
+- Works best with a few dependencies to validate api-routes and keep code DRY
 
 Using pnpm:
 
@@ -32,6 +36,16 @@ Using npm:
 
 ```bash
  npm install -D prisma-zod-generator && npm install next-api-middleware zod superjson
+```
+
+## Example Project
+
+This repository contains an example project to play with.
+
+```
+git clone https://github.com/justinsgithub/prisma-generator-next && \
+cd prisma-generator-next/usage && \
+npm install && npm run gen && npm run dev
 ```
 
 # Usage
@@ -81,8 +95,9 @@ model Post {
 }
 ```
 
-...it will generate the following files
+...it would generate the following files
 
+![Generated Files](/generated.png)
 
 
 4. edit the generated files as needed
@@ -137,7 +152,8 @@ model User {
 
 Use additional options in the `schema.prisma`
 
-!!Important: 
+***Important***
+
 - useBigInt defaults to false because sending a BigInt value from a web client is complicated. 
 - I think it is perfectly fine for Zod to just validate that it is a number because Prisma will accept it just fine. 
 - The BigInt type is why `superjson` is used to serialize the Prisma data before sending Response to client.
@@ -156,3 +172,20 @@ generator next {
   isGenerateInclude = true
 }
 ```
+
+# Roadmap
+
+- Turn this project into a complete Next.JS app generator, including generating a front-end client for the api routes.
+
+- Any feedback and suggestions will be greatly appreciated.
+
+# Inspirations
+
+Huge thanks to other generator projects that I was able to learn and take from.
+
+*Especially* [**prisma-zod-generator**](https://github.com/omar-dulaimi/prisma-zod-generator), the code responsible for generating the Zod schemas for this project.
+
+- [typegraphql-prisma] (https://github.com/MichalLytek/typegraphql-prisma)
+- [prisma-trpc-generator] (https://github.com/omar-dulaimi/prisma-trpc-generator)
+
+Also big shout out to [create-prisma-generator](https://github.com/YassinEldeeb/create-prisma-generator) for giving me somewhere to start from

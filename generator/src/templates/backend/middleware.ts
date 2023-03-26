@@ -1,4 +1,4 @@
-import { generateImportPrismaStatement } from '../utils/get-import-path'
+import { generateImportPrismaStatement } from '../../utils/get-import-path'
 
 
 type MiddlewareTemplate = {

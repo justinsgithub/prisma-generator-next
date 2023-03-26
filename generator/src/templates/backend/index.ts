@@ -1,9 +1,9 @@
-import { getImportPath } from '../utils/get-import-path'
+import { getImportPath } from '../../utils/get-import-path'
 export * from './db'
+export * from '../pgen-types'
 export * from './api'
-export * from './types'
-export * from './validate'
 export * from './middleware'
+export * from '../validate'
 
 interface Params {
   isDefaultExport: boolean

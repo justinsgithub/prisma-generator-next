@@ -8,15 +8,20 @@ import { project } from './utils/project'
 
 const configBoolean = z.enum(['true', 'false'])
 
-// options to specify in schema.prisma
-const configSchema = z.object({
+/**
+   options to specify in schema.prisma
   prismaFilePath: z.string().optional(),
   prismaVarName: z.string().default('prisma'),
   apiRoutePrefix: z.string().default('pgen'), // pages/api/pgen/${modelName}
   outputSuffix: z.string().default('pgen'), // output/pgen/${generatedFiles}
   useBigInt: configBoolean.default('false'),
-  /* contextPath: z.string().default('../../../../src/context'), */
-  /* trpcOptionsPath: z.string().optional(), */
+*/
+const configSchema = z.object({
+  prismaFilePath: z.string().optional(),
+  prismaVarName: z.string().default('prisma'),
+  apiRoutePrefix: z.string().default('pgen'), /** pages/api/pgen/${modelName} */
+  outputSuffix: z.string().default('pgen'), /** output/pgen/${generatedFiles} */
+  useBigInt: configBoolean.default('false'),
 })
 
 export type Config = z.infer<typeof configSchema>
@@ -38,7 +43,7 @@ function checkUserPrisma({ customPrismaFilePath, prismaVarName, schemaPath, outp
   if (!customPrismaFilePath) return p
   const resolvedPath = path.resolve(path.dirname(schemaPath), customPrismaFilePath)
   const prismaFile = project.addSourceFileAtPathIfExists(resolvedPath)
-  const defaultMessage = `using default prismaFilePath ${path.join(outputDir, 'db')} instead`
+  const defaultMessage = `using default prismaFilePath ${path.join(outputDir, 'backend', 'db')} instead`
 
   if (!prismaFile) {
     log.error(`prismaFilePath ${resolvedPath} not found`)
@@ -98,7 +103,7 @@ export function getConfig(options: GeneratorOptions): GetConfig {
     schemaPath,
     outputDir,
   })
-  const prismaFilePath = userPrismaPath ? userPrismaPath : path.resolve(path.join(outputDir, 'db.ts'))
+  const prismaFilePath = userPrismaPath ? userPrismaPath : path.resolve(path.join(outputDir, 'backend', 'db.ts'))
 
   let apiPath = ''
 

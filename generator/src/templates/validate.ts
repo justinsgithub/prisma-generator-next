@@ -38,7 +38,7 @@ export function validateTemplate(modelNames: string[], provider: string, outputD
 /* IMPORTANT: this file ***IS NOT SAFE*** to edit, will be overwritten every time "prisma generate" is ran */
 /* all files in ./prisma-zod directory will also be deleted / overwritten */
 import * as schemas from '${schemaImport}';
-import { ModelValidations } from './types';
+import { ModelValidations } from './pgen-types';
 
 export const validations: ModelValidations = {
   ${joinOpVals}

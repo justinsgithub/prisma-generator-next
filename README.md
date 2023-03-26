@@ -185,7 +185,8 @@ Huge thanks to other generator projects that I was able to learn and take from.
 
 *Especially* [**prisma-zod-generator**](https://github.com/omar-dulaimi/prisma-zod-generator), the code responsible for generating the Zod schemas for this project.
 
-- [typegraphql-prisma] (https://github.com/MichalLytek/typegraphql-prisma)
-- [prisma-trpc-generator] (https://github.com/omar-dulaimi/prisma-trpc-generator)
+[typegraphql-prisma] (https://github.com/MichalLytek/typegraphql-prisma)
+
+[prisma-trpc-generator] (https://github.com/omar-dulaimi/prisma-trpc-generator)
 
 Also big shout out to [create-prisma-generator](https://github.com/YassinEldeeb/create-prisma-generator) for giving me somewhere to start from

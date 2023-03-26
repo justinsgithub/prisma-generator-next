@@ -10,15 +10,15 @@ const nullIfExists = (path: string): string | null => (existsSync(path) ? null :
   first generate: index, db, middleware, api-routes
   every generate: types, validate, schemas/
 */
-export function getPgenFiles(
-  apiPath: string,
-  modelNames: string[],
-  prismaFilePath: string,
-  outputDir: string
-): PgenFiles {
-  const types = path.join(outputDir, 'types.ts')
+export function getPgenFiles( apiPath: string, modelNames: string[], prismaFilePath: string, outputDir: string): PgenFiles {
+  const backend = path.join(outputDir, 'backend')
+  const types = path.join(outputDir, 'pgen-types.d.ts')
   const validate = path.join(outputDir, 'validate.ts')
-  const schemas = path.join(outputDir, 'schemas')
+  const schemas = path.join(backend, 'schemas')
+  const index = nullIfExists(path.join(backend, 'index.ts'))
+  const db = nullIfExists(prismaFilePath)
+  const middleware = nullIfExists(path.join(backend, 'middleware.ts'))
+
 
   const apiRoutes = modelNames.map((name) => {
     const modelName = name
@@ -27,22 +27,8 @@ export function getPgenFiles(
     return { modelName, apiRoute }
   })
 
-  const index = nullIfExists(path.join(outputDir, 'index.ts'))
-  const db = nullIfExists(prismaFilePath)
-  const middleware = nullIfExists(path.join(outputDir, 'middleware.ts'))
-
-  return {
-    types,
-    validate,
-    schemas,
-    apiRoutes,
-    index,
-    db,
-    middleware,
-  }
+  return { types, validate, schemas, apiRoutes, index, db, middleware }
 }
-
-// TODO: functions to write each file
 
 export type Content = {
   db: string
@@ -58,7 +44,6 @@ export async function writePgenFiles(files: PgenFiles, content: Content) {
   files.index && content.index && (await writeFileSafely(files.index, content.index))
   files.middleware && content.middleware && (await writeFileSafely(files.middleware, content.middleware))
   await writeFileSafely(files.types, content.types)
-  // await writeFileSafely(files.schemas, 'TODO') // schemas is the dir that zod generator writes to
   await writeFileSafely(files.validate, content.validate)
   for (const route of content.apiRoutes) {
     route.apiRoute && (await writeFileSafely(route.apiRoute, route.content))

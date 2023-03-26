@@ -1,14 +1,14 @@
 import { GeneratorConfig, generatorHandler, GeneratorOptions } from '@prisma/generator-helper'
 import { getConfig } from '../config'
 import { log } from '../logger'
-import { apiTemplate, dbTemplate, indexTemplate, middlewareTemplate, typesTemplate, validateTemplate } from '../templates'
+import { apiTemplate, dbTemplate, indexTemplate, middlewareTemplate, typesTemplate, validateTemplate } from '../templates/backend'
 import { resolveModelsComments } from '../utils/resolve-comments'
 import { getPgenFiles, writePgenFiles } from '../utils/write-files'
 import { generateZod } from '../zod'
 
 const onManifest = (_config: GeneratorConfig) => {
   return {
-    defaultOutput: '../src',
+    defaultOutput: './',
     prettyName: 'Prisma Next.JS',
     requiresGenerators: ['prisma-client-js'], // for zod generator
   }

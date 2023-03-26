@@ -9,6 +9,8 @@ format model name for api-route name
 */
 export const lowerPlural = (modelName: string) => pluralize(modelName.toLowerCase())
 
+export const lowerCase = (name: string) => name.substring(0, 1).toLowerCase() + name.substring(1)
+
 const indexExports = new Set<string>()
 
 function addIndexExport(filePath: string) {
