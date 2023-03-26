@@ -26,7 +26,7 @@ ${importStatement}
 import { NextApiHandler } from 'next'
 import { Middleware, use } from 'next-api-middleware'
 import type { ModelOp, ModelName, ValidateOp } from './types'
-import { validations } from './validate'
+import { validations } from '../validate'
 
 /*
   OPTIONS is standard HTTP method that returns 204 (No Content) with an "Allow" header containing allowed methods

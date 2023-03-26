@@ -13,7 +13,7 @@ interface ApiTemplate {
 
 export function apiTemplate(params: ApiTemplate): string {
   const { isDefaultExport, apiPath, prismaVarName, modelName, provider, outputDir } = params
-  const indexFilePath = join(outputDir, 'index.ts')
+  const indexFilePath = join(outputDir, 'backend', 'index.ts')
   const fullPath = resolve(join(apiPath, lowerPlural(modelName), 'index.ts'))
   const importPath = getImportPath(fullPath, resolve(indexFilePath))
   const pgenImport1 = `import ${prismaVarName}, { useMiddleware } from '${importPath}'`
