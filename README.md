@@ -16,7 +16,7 @@
 # Installation
 
 
-- This package assumes you have project initialized with Prisma, Next.JS.
+- This package assumes you have a project initialized with Prisma, Next.JS.
 
 - Works best with a few dependencies to validate api-routes and keep code DRY
 
