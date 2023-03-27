@@ -1,5 +1,11 @@
 # prisma-generator-next
 
+## 0.1.2
+
+### Patch Changes
+
+- bcf089e: fix: proper modelnames in api routes
+
 ## 0.1.1
 
 ### Patch Changes
